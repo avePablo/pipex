@@ -11,7 +11,10 @@ LIB = $(LIBDIR2)/libprintf.a $(LIBDIR1)/gnl.a
 # Flags para las librerías
 #LIBS = -L$(LIBDIR1) -lpinga -L$(LIBDIR2) -lprintf
 
-SRC =	main.c \
+SRC =	./src/main.c \
+		./src/split.c \
+		./src/utils.c 
+
 
 OBJ = $(SRC:.c=.o)
 
