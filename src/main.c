@@ -1,30 +1,46 @@
 #include "pipex.h"
 
-
-void parse(int argc, char *argv[])
+char **parse(int argc, char *argv[])
 {
-    int i;
     int j;
-   
+    int i;
+    int k;
     char **args;
-    
-    i = 1;
-    while (i < argc)
-    {
-        args = ft_split(argv[i], ' ');
-            j = 0;
-            while(args[j])
-            {
-              ft_printf("%s\n",args[j]);
-                j++;
-            }      
-       i++;
-    }
-}
+    char **temp;
 
+    k = 0;
+    i = 1;
+    while (i < argc) {
+        temp = ft_split(argv[i], ' ');
+        j = 0;
+        while (temp[j])
+        {
+            args = (char **)realloc(args, (k + 1) * sizeof(char *));
+            args[k] = strdup(temp[j]);
+            k++;
+            j++;
+        }
+            free(temp); 
+        
+        i++;
+    }
+    args = (char **)realloc(args, (k + 1) * sizeof(char *));
+    args[k] = NULL;
+    
+    return args;
+}
 
 int main(int argc, char *argv[])
 {
+    int i;
+
+    i = 0;
 parse(argc, argv);
+while (parse(argc, argv)[i] != NULL)
+{ 
+    
+    ft_printf("%s\n", parse(argc, argv)[i]);
+    i++;
+}
 return 0;
 }
