@@ -5,17 +5,15 @@ CC = gcc
 # CFLAGS = -Wall -Werror -Wextra
 
 # Directorios de las librerías
-LIBDIR1 = ./get_next_line
+LIBDIR1 = ./Libft
 LIBDIR2 = ./ft_printf
-LIB = $(LIBDIR2)/libprintf.a $(LIBDIR1)/gnl.a  
+LIB = $(LIBDIR2)/libprintf.a $(LIBDIR1)/libft.a  
 # Flags para las librerías
 #LIBS = -L$(LIBDIR1) -lpinga -L$(LIBDIR2) -lprintf
 
-SRC =	./src/main.c \
-		./src/split.c \
-		./src/utils.c 
-
-
+SRC =	./src/pipex.c \
+		./src/utils.c
+		
 OBJ = $(SRC:.c=.o)
 
 # Objetivo principal

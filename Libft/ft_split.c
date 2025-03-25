@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pabalvar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 13:38:25 by pabalvar          #+#    #+#             */
+/*   Updated: 2024/09/26 13:38:27 by pabalvar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 static int	len_word(char const *s, char c, int i)
 {
@@ -90,3 +101,24 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (asig_word(s, c, dest));
 }
+
+/*int	main(void)
+{
+	char const	*s;
+	char		c;
+	char		**result;
+	int			i;
+
+	s = " ";
+	c = ' ';
+	result = ft_split("     ", 'p');
+	i = 0;
+	while (result[i] != NULL)
+	{
+		printf("%s \n", result[i]);
+		free(result[i]);
+		i++;
+	}
+	free(result);
+	return (0);
+}*/

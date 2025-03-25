@@ -1,52 +1,75 @@
 #include "pipex.h"
 
-static size_t	ft_strlen(const char *str)
+void	exit_handler(int n_exit)
 {
-	size_t	len;
-
-	len = 0;
-	while (*str != '\0')
-	{
-		len++;
-		str++;
-	}
-	return (len);
+	if (n_exit == 1)
+		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
+	exit(EXIT_FAILURE);
 }
 
-static char	*d_less_len(char *dest, const char *s, unsigned int start,
-		size_t len)
+int	open_file(char *file, int in_or_out)
 {
-	size_t	d;
+	int	fd;
 
-	d = 0;
-	while (d < len)
-	{
-		dest[d] = s[start + d];
-		d++;
-	}
-	dest[d] = '\0';
-	return (dest);
+	if (in_or_out == 0)
+		fd = open(file, O_RDONLY);
+	else
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		exit_handler(1);
+	return (fd);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_free_tab(char **tab)
 {
-	char	*dest;
+	int	i;
 
-	if (s == NULL)
-		return (NULL);
-	if (start >= ft_strlen(s))
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
+
+char	*my_getenv(char *name, char **env)
+{
+	int		i;
+	char	*sub;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(name);
+	while (env[i])
 	{
-		dest = malloc(1 * sizeof(char));
-		if (dest == NULL)
-			return (NULL);
-		dest[0] = '\0';
-		return (dest);
+		if (!ft_strncmp(env[i], name, len) && env[i][len] == '=')
+			return (env[i] + len + 1);
+		i++;
 	}
-	if ((start + len) > ft_strlen(s))
-		len = ft_strlen(s) - start;
-	dest = malloc((len + 1) * sizeof(char));
-	if (dest == NULL)
-		return (NULL);
-	d_less_len(dest, s, start, len);
-	return (dest);
+	return (NULL);
+}
+
+char	*get_path(char *cmd, char **env)
+{
+	char	**allpath;
+	char	*full_path;
+	char	*temp;
+	int		i;
+
+	allpath = ft_split(my_getenv("PATH", env), ':');
+	if (!allpath)
+		return (cmd);
+	i = -1;
+	while (allpath[++i])
+	{
+		temp = ft_strjoin(allpath[i], "/");
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(full_path, F_OK | X_OK) == 0)
+		{
+			ft_free_tab(allpath);
+			return (full_path);
+		}
+		free(full_path);
+	}
+	ft_free_tab(allpath);
+	return (cmd);
 }
