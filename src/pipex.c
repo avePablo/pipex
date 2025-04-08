@@ -59,17 +59,27 @@ void	parent(char **av, int *p_fd, char **env)
 int	main(int ac, char **av, char **env)
 {
 	int		p_fd[2];
+	int		status[2];
 	pid_t	pid;
+	pid_t	pid2;
 
 	if (ac != 5)
 		exit_handler(1);
 	if (pipe(p_fd) == -1)
 		exit_handler(1);
 	pid = fork();
+	pid2 = fork();
 	if (pid == -1)
 		exit_handler(1);
 	if (pid == 0)
 		child(av, p_fd, env);
-	parent(av, p_fd, env);
+	if (pid2 == -1)
+		exit_handler(1);
+	if (pid2 == 0)
+		parent(av, p_fd, env);
+	close(p_fd[0]);
+	close(p_fd[1]);
+	waitpid(pid, &status[0], 0);
+	waitpid(pid2, &status[1], 0);
 	return (0);
 }
