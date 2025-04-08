@@ -45,7 +45,6 @@ void	ft_free_tab(char **tab)
 char	*my_getenv(char *name, char **env)
 {
 	int		i;
-	char	*sub;
 	int		len;
 
 	i = 0;

@@ -1,8 +1,8 @@
 NAME = pipex
 
-CC = gcc
+CC = cc -g
 
-# CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 # Directorios de las librerías
 LIBDIR1 = ./Libft

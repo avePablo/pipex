@@ -70,7 +70,6 @@ int	main(int ac, char **av, char **env)
 		exit_handler(1);
 	if (pid == 0)
 		child(av, p_fd, env);
-	waitpid(pid, NULL, 0);
 	parent(av, p_fd, env);
 	return (0);
 }
