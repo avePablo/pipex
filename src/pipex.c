@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabalvar <pabalvar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kfuto <kfuto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:45:01 by pabalvar          #+#    #+#             */
-/*   Updated: 2025/03/26 16:45:07 by pabalvar         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:35:30 by kfuto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ int	main(int ac, char **av, char **env)
 	if (pipe(p_fd) == -1)
 		exit_handler(1);
 	pid = fork();
-	pid2 = fork();
 	if (pid == -1)
 		exit_handler(1);
 	if (pid == 0)
 		child(av, p_fd, env);
+	pid2 = fork();
 	if (pid2 == -1)
 		exit_handler(1);
 	if (pid2 == 0)
